@@ -5,7 +5,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "registers new user when email does not exist" do
     assert_difference "User.count", 1 do
-      post session_path, params: { email_address: "newuser@example.com", password: "password123" }
+      post session_path, params: { email_address: "newuser@example.com", password: "Password1!" }
     end
     assert_redirected_to root_path
     assert_not_nil cookies[:session_id]
@@ -49,7 +49,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "handles concurrent registration race condition gracefully" do
     email = "race@example.com"
-    User.create!(email_address: email, password: "password123")
+    User.create!(email_address: email, password: "Password1!")
 
     # Simulate TOCTOU: find_by sees no user, but save hits a DB unique constraint
     # because another process inserted the row between the check and the insert.

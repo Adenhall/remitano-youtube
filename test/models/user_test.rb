@@ -31,4 +31,33 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.valid?
     assert_includes user.errors[:password], "can't be blank"
   end
+
+  test "rejects password shorter than 8 characters" do
+    user = User.new(email_address: "new@example.com", password: "Ab1!")
+    assert_not user.valid?
+    assert_includes user.errors[:password], "is too short (minimum is 8 characters)"
+  end
+
+  test "rejects password without a digit" do
+    user = User.new(email_address: "new@example.com", password: "Abcdefg!")
+    assert_not user.valid?
+    assert_includes user.errors[:password], "must contain at least one digit"
+  end
+
+  test "rejects password without a special character" do
+    user = User.new(email_address: "new@example.com", password: "Abcdefg1")
+    assert_not user.valid?
+    assert_includes user.errors[:password], "must contain at least one special character"
+  end
+
+  test "accepts valid password with length, digit, and special character" do
+    user = User.new(email_address: "new@example.com", password: "Secure1!")
+    assert user.valid?
+  end
+
+  test "does not re-validate password when updating other attributes" do
+    user = users(:one)
+    user.email_address = "updated@example.com"
+    assert user.valid?
+  end
 end
