@@ -12,7 +12,4 @@ class User < ApplicationRecord
   validates :password,
     format: { with: /\A(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'\",.<>?\/\\]).*\z/, message: "must contain at least one special character" },
     allow_nil: true
-  validates :password,
-    format: { with: /[!@#$%^&*()\-_=+\[\]{}|;:'",.<>?\/\\]/, message: "must contain at least one special character" },
-    allow_nil: true
 end
