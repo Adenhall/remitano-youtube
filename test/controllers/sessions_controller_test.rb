@@ -46,4 +46,24 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_nil inertia.props[:currentUser]
   end
+
+  test "handles concurrent registration race condition gracefully" do
+    email = "race@example.com"
+    User.create!(email_address: email, password: "password123")
+
+    # Simulate TOCTOU: find_by sees no user, but save hits a DB unique constraint
+    # because another process inserted the row between the check and the insert.
+    User.define_singleton_method(:find_by) { |*| nil }
+    User.define_method(:save) { raise ActiveRecord::RecordNotUnique }
+    begin
+      assert_no_difference "User.count" do
+        post session_path, params: { email_address: email, password: "password456" }
+      end
+      assert_redirected_to root_path
+      assert_match(/log in/, flash[:alert])
+    ensure
+      User.singleton_class.remove_method(:find_by)
+      User.remove_method(:save)
+    end
+  end
 end

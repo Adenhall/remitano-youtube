@@ -20,6 +20,8 @@ class SessionsController < ApplicationController
         redirect_to root_path, alert: user.errors.full_messages.first
       end
     end
+  rescue ActiveRecord::RecordNotUnique
+    redirect_to root_path, alert: "An account with this email was just created. Please log in."
   end
 
   def destroy
