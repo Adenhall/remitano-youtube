@@ -34,4 +34,16 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_response :success
   end
+
+  test "home shares currentUser in Inertia props when logged in" do
+    sign_in_as(@user)
+    get root_path
+    assert_equal @user.id, inertia.props[:currentUser][:id]
+    assert_equal @user.email_address, inertia.props[:currentUser][:email]
+  end
+
+  test "home shares nil currentUser in Inertia props when logged out" do
+    get root_path
+    assert_nil inertia.props[:currentUser]
+  end
 end

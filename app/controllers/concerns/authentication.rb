@@ -2,7 +2,8 @@ module Authentication
   extend ActiveSupport::Concern
 
   included do
-    before_action :require_authentication
+    before_action :resume_session       # always runs — populates Current.session from cookie
+    before_action :require_authentication  # skipped on public pages
     helper_method :authenticated?
   end
 
@@ -14,11 +15,11 @@ module Authentication
 
   private
     def authenticated?
-      resume_session
+      Current.session.present?
     end
 
     def require_authentication
-      resume_session || request_authentication
+      Current.session || request_authentication
     end
 
     def resume_session
@@ -30,8 +31,7 @@ module Authentication
     end
 
     def request_authentication
-      session[:return_to_after_authenticating] = request.url
-      redirect_to new_session_path
+      redirect_to root_path, alert: "Please log in to continue."
     end
 
     def after_authentication_url
