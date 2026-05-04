@@ -1,7 +1,10 @@
 import { createInertiaApp } from '@inertiajs/react'
 
+const pages = import.meta.glob('../pages/**/*.tsx', { eager: true })
+
 void createInertiaApp({
-  pages: "../pages",
+  resolve: (name) =>
+    pages[`../pages/${name}/index.tsx`] ?? pages[`../pages/${name}.tsx`],
 
   strictMode: true,
 

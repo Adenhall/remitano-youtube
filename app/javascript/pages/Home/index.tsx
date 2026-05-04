@@ -1,12 +1,13 @@
 import { Head } from "@inertiajs/react";
+import Layout from "../../components/Layout";
 
 export default function Home() {
   return (
-    <>
+    <Layout>
       <Head title="Home" />
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <h1 className="text-4xl font-bold text-gray-900">Remitano YouTube</h1>
+      <div className="text-center py-20 text-gray-500">
+        <p className="text-lg">No videos shared yet. Be the first to share one!</p>
       </div>
-    </>
+    </Layout>
   );
 }
