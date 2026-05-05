@@ -86,7 +86,7 @@ openssl rand -hex 64   # copy the output into .env as SECRET_KEY_BASE
 ### 2. Build and start
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 The first run compiles the image (installs gems, runs Vite, precompiles assets), starts PostgreSQL, and launches the Rails app. Database creation and migrations run automatically on startup.
@@ -96,8 +96,8 @@ Open [http://localhost:3000](http://localhost:3000).
 ### Stopping and cleaning up
 
 ```bash
-docker-compose down        # stop containers, keep the database volume
-docker-compose down -v     # stop containers and delete all data
+docker compose down        # stop containers, keep the database volume
+docker compose down -v     # stop containers and delete all data
 ```
 
 ---
@@ -114,7 +114,7 @@ docker-compose down -v     # stop containers and delete all data
 ## Troubleshooting
 
 **`PG::ConnectionBad` on startup**
-PostgreSQL is not running or the connection URL is wrong. For local dev, ensure the PostgreSQL service is running. For Docker, check that the `db` container is healthy: `docker-compose ps`.
+PostgreSQL is not running or the connection URL is wrong. For local dev, ensure the PostgreSQL service is running. For Docker, check that the `db` container is healthy: `docker compose ps`.
 
 **`Vite server not found` / blank page in development**
 Always use `bin/dev` instead of `bin/rails server` — it starts both Rails and Vite together.
@@ -130,4 +130,4 @@ node -v    # should be ≥ 22
 The `package-lock.json` must be committed and up-to-date. Run `npm install` locally and commit the updated lockfile.
 
 **`SECRET_KEY_BASE` is not set (Docker)**
-Copy `.env.example` to `.env` and fill in `SECRET_KEY_BASE` with the output of `openssl rand -hex 64` before running `docker-compose up`.
+Copy `.env.example` to `.env` and fill in `SECRET_KEY_BASE` with the output of `openssl rand -hex 64` before running `docker compose up`.
