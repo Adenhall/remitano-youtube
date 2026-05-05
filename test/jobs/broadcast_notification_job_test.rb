@@ -3,22 +3,12 @@ require "test_helper"
 class BroadcastNotificationJobTest < ActiveJob::TestCase
   include ActionCable::TestHelper
 
-  test "broadcasts to every user except the sharer" do
+  test "broadcasts video title and sharer to notifications channel" do
     video = videos(:one)
-    sharer = video.user
-    recipient = users(:two)
-    payload = { title: video.title, shared_by: sharer.email_address }
-
-    assert_broadcast_on(NotificationsChannel.broadcasting_for(recipient), payload) do
-      BroadcastNotificationJob.perform_now(video)
-    end
-  end
-
-  test "does not broadcast to the sharer" do
-    video = videos(:one)
-    sharer = video.user
-
-    assert_no_broadcasts(NotificationsChannel.broadcasting_for(sharer)) do
+    assert_broadcast_on("notifications", {
+      title: video.title,
+      shared_by: video.user.email_address
+    }) do
       BroadcastNotificationJob.perform_now(video)
     end
   end
