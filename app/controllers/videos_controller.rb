@@ -18,6 +18,7 @@ class VideosController < ApplicationController
 
     video = Current.user.videos.build(youtube_url: url, youtube_id: youtube_id, title: title)
     if video.save
+      BroadcastNotificationJob.perform_later(video)
       redirect_to root_path, notice: "#{title} shared successfully!"
     else
       redirect_to new_video_path, alert: video.errors.full_messages.first
