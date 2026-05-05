@@ -37,7 +37,7 @@ RUN bundle install && \
 
 # Install JS dependencies before copying the rest of the app (layer cache)
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
 # Copy application code
 COPY . .
