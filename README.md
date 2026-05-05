@@ -111,6 +111,36 @@ docker compose down -v     # stop containers and delete all data
 
 ---
 
+## Fly.io Deployment
+
+The app is deployed at **https://remitano-youtube.fly.dev**.
+
+Deployments to production happen automatically on every push to `main` via GitHub Actions (`.github/workflows/fly-deploy.yml`).
+
+### Manual deployment
+
+```bash
+fly deploy --remote-only
+```
+
+### Useful commands
+
+```bash
+fly logs                                        # tail production logs
+fly ssh console --pty -C "/rails/bin/rails console"  # open a Rails console
+fly status                                      # machine health overview
+fly secrets set KEY=value                       # set an environment variable
+```
+
+### First-time setup (already done — for reference only)
+
+```bash
+fly launch --no-deploy          # provision the app and Postgres on Fly.io
+fly deploy --remote-only        # initial deploy
+```
+
+---
+
 ## Troubleshooting
 
 **`PG::ConnectionBad` on startup**

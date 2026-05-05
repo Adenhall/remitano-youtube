@@ -64,3 +64,5 @@ end
 gem "inertia_rails", "~> 3.21"
 
 gem "vite_rails", "~> 3.10"
+
+gem "dockerfile-rails", ">= 1.7", group: :development
