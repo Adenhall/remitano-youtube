@@ -16,6 +16,9 @@ console_command = '/rails/bin/rails console'
   PORT = '3000'
   SOLID_QUEUE_IN_PUMA = '1'
 
+[processes]
+  app = './bin/rails server'
+
 [http_service]
   internal_port = 3000
   force_https = true
