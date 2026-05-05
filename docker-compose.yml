@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    ports:
+      - "3000:80"
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DATABASE_URL: postgres://postgres:postgres@db:5432/remitano_youtube_production
+      CACHE_DATABASE_URL: postgres://postgres:postgres@db:5432/remitano_youtube_production_cache
+      QUEUE_DATABASE_URL: postgres://postgres:postgres@db:5432/remitano_youtube_production_queue
+      CABLE_DATABASE_URL: postgres://postgres:postgres@db:5432/remitano_youtube_production_cable
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
