@@ -23,7 +23,7 @@ export default function Layout({ children }: LayoutProps) {
           <button
             onClick={dismiss}
             aria-label="Dismiss notification"
-            className="shrink-0 text-white hover:text-blue-200 text-lg leading-none"
+            className="shrink-0 text-white hover:text-blue-200 text-lg leading-none p-1"
           >
             ✕
           </button>

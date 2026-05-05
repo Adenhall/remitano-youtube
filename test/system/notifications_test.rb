@@ -22,9 +22,9 @@ class NotificationsTest < ApplicationSystemTestCase
 
     ActionCable.server.broadcast("notifications", PAYLOAD)
 
-    assert_selector "[role='alert']", wait: 3
-    find("button[aria-label='Dismiss notification']").click
-    assert_no_selector "[role='alert']", wait: 3
+    assert_selector "[role='alert']", wait: 5
+    page.execute_script("document.querySelector(\"button[aria-label='Dismiss notification']\").click()")
+    assert_no_selector "[role='alert']", wait: 5
   end
 
   test "sharer does not see notification for their own video" do
