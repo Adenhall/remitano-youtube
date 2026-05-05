@@ -16,8 +16,8 @@ export default function Home() {
         ) : (
           <div className="space-y-8">
             {videos.map((video) => (
-              <div key={video.id} className="flex gap-6 border-b border-gray-200 pb-8">
-                <div className="shrink-0 w-80">
+              <div key={video.id} className="flex flex-col sm:flex-row gap-4 border-b border-gray-200 pb-8">
+                <div className="sm:shrink-0 sm:w-80">
                   <iframe
                     src={`https://www.youtube.com/embed/${video.youtube_id}`}
                     title={video.title}
