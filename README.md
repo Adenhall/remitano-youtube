@@ -8,7 +8,7 @@ A web app for sharing YouTube videos. Users register or log in, paste a YouTube 
 - User registration & login (single combined form — no separate sign-up page)
 - Share a YouTube video by URL — title is fetched automatically via YouTube oEmbed (no API key required)
 - Home feed listing all shared videos (newest first) with embedded player
-- Real-time notifications to other logged-in users on each new share (coming soon)
+- Real-time notifications to other logged-in users on each new share
 
 **Stack:** Rails 8.1 · React 19 · Inertia.js · Tailwind CSS v4 · PostgreSQL · ActionCable · Solid Queue · Vite
 
@@ -107,7 +107,7 @@ docker compose down -v     # stop containers and delete all data
 1. **Register or log in** — enter an email and password in the top-right form and click **Login / Register**. New email addresses are automatically registered; existing ones are authenticated.
 2. **Share a video** — click **Share a movie**, paste a YouTube URL, and click **Share**. The title is fetched automatically.
 3. **Browse the feed** — shared videos appear on the home page newest-first, each with an embedded player and the sharer's email.
-4. **Real-time notifications** — when another user shares a video, a notification appears in your browser (coming soon).
+4. **Real-time notifications** — when another user shares a video, a notification banner appears in your browser and the home feed refreshes automatically.
 
 ---
 
