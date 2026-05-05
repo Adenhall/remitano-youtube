@@ -17,7 +17,7 @@ console_command = '/rails/bin/rails console'
   SOLID_QUEUE_IN_PUMA = '1'
 
 [processes]
-  app = './bin/rails server'
+  app = './bin/rails server -b 0.0.0.0'
 
 [http_service]
   internal_port = 3000
