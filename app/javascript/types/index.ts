@@ -11,4 +11,5 @@ export interface Flash {
 export interface SharedProps {
   currentUser: CurrentUser | null
   flash: Flash
+  [key: string]: unknown
 }
