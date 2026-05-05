@@ -3,6 +3,14 @@ export interface CurrentUser {
   email: string
 }
 
+export interface VideoItem {
+  id: number
+  youtube_id: string
+  title: string
+  shared_by: string
+  shared_at: string
+}
+
 export interface Flash {
   notice?: string
   alert?: string
