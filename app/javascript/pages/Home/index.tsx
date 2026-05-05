@@ -1,9 +1,24 @@
-import { Head, usePage } from "@inertiajs/react";
+import { Head, router, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
+import { createConsumer } from "@rails/actioncable";
 import Layout from "../../components/Layout";
 import type { SharedProps, VideoItem } from "../../types";
 
 export default function Home() {
   const { videos } = usePage<SharedProps & { videos: VideoItem[] }>().props;
+
+  useEffect(() => {
+    const consumer = createConsumer();
+    const subscription = consumer.subscriptions.create("NotificationsChannel", {
+      received() {
+        router.reload({ only: ["videos"] });
+      },
+    });
+    return () => {
+      subscription.unsubscribe();
+      consumer.disconnect();
+    };
+  }, []);
 
   return (
     <Layout>
