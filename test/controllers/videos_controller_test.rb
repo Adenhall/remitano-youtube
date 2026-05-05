@@ -43,6 +43,18 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "create enqueues BroadcastNotificationJob after saving video" do
+    sign_in_as(@user)
+    Video.define_singleton_method(:fetch_title) { |_| "Rick Astley - Never Gonna Give You Up" }
+    begin
+      assert_enqueued_with(job: BroadcastNotificationJob) do
+        post videos_path, params: { youtube_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
+      end
+    ensure
+      Video.singleton_class.remove_method(:fetch_title)
+    end
+  end
+
   test "create redirects back with alert when title fetch fails" do
     sign_in_as(@user)
     Video.define_singleton_method(:fetch_title) { |_| nil }
